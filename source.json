@@ -24,6 +24,15 @@
       "versions": [
         {
           "version": "3.0.0",
+          "buildVersion": "17",
+          "date": "2026-11-25T12:42:51Z",
+          "localizedDescription": "Merge pull request #2 from NB6RULES/tools-tab",
+          "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b17/OBRA-Essentials.ipa",
+          "size": 6384736,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "3.0.0",
           "buildVersion": "16",
           "date": "2026-11-25T11:45:41Z",
           "localizedDescription": "Merge pull request #1 from NB6RULES/improved-viewer",
@@ -51,10 +60,10 @@
         }
       },
       "version": "3.0.0",
-      "versionDate": "2026-11-25T11:45:41Z",
-      "versionDescription": "Merge pull request #1 from NB6RULES/improved-viewer",
-      "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b16/OBRA-Essentials.ipa",
-      "size": 6359027
+      "versionDate": "2026-11-25T12:42:51Z",
+      "versionDescription": "Merge pull request #2 from NB6RULES/tools-tab",
+      "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b17/OBRA-Essentials.ipa",
+      "size": 6384736
     }
   ],
   "news": []
