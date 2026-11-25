@@ -24,6 +24,15 @@
       "versions": [
         {
           "version": "3.0.0",
+          "buildVersion": "16",
+          "date": "2026-11-25T11:45:41Z",
+          "localizedDescription": "Merge pull request #1 from NB6RULES/improved-viewer",
+          "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b16/OBRA-Essentials.ipa",
+          "size": 6359027,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "3.0.0",
           "buildVersion": "15",
           "date": "2026-11-15T20:09:32Z",
           "localizedDescription": "OBRA Essentials 3.0: new bundle ID and links, import runs from a zip, full-backup export; analyzer 1.2 opens backups",
@@ -42,10 +51,10 @@
         }
       },
       "version": "3.0.0",
-      "versionDate": "2026-11-15T20:09:32Z",
-      "versionDescription": "OBRA Essentials 3.0: new bundle ID and links, import runs from a zip, full-backup export; analyzer 1.2 opens backups",
-      "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b15/OBRA-Essentials.ipa",
-      "size": 6279964
+      "versionDate": "2026-11-25T11:45:41Z",
+      "versionDescription": "Merge pull request #1 from NB6RULES/improved-viewer",
+      "downloadURL": "https://github.com/NB6RULES/OBRA-Essentials/releases/download/v3.0.0-b16/OBRA-Essentials.ipa",
+      "size": 6359027
     }
   ],
   "news": []
