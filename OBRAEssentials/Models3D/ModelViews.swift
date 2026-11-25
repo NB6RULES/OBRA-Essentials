@@ -321,13 +321,13 @@ struct ModelViewerView: View {
                 EmptyView()
             }
 
+            // The view cube, toolbar (Inspect, Measure, Section, Frame) and results card are drawn by the
+            // web page so they track the 3D view; only the top bar is native.
             VStack(spacing: 0) {
                 topBar
                 Spacer()
-                if ctrl.phase == .ready { controls }
             }
             .padding(.horizontal, 12)
-            .padding(.bottom, 8)
         }
         .sheet(isPresented: $showInfo) {
             ModelInfoSheet(item: ctrl.item, info: ctrl.info)
@@ -350,6 +350,7 @@ struct ModelViewerView: View {
                 }
             }
             Spacer(minLength: 4)
+            if ctrl.phase == .ready { displayMenu }
             circleButton("info") { showInfo = true }
             circleButton("square.and.arrow.up") { share = ShareItem(url: ctrl.item.fileURL) }
         }
@@ -366,58 +367,30 @@ struct ModelViewerView: View {
         .tint(.primary)
     }
 
-    private var controls: some View {
-        VStack(spacing: 10) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach([("Iso", "iso"), ("Front", "front"), ("Back", "back"), ("Left", "left"), ("Right", "right"), ("Top", "top"), ("Bottom", "bottom")], id: \.1) { label, key in
-                        Button {
-                            ctrl.setView(key)
-                            Haptics.tick()
-                        } label: {
-                            Text(label)
-                                .font(.subheadline.weight(.semibold))
-                                .padding(.horizontal, 14).padding(.vertical, 8)
-                                .background(.ultraThinMaterial, in: Capsule())
-                                .overlay(Capsule().stroke(.white.opacity(0.12), lineWidth: 1))
-                        }
-                        .tint(.primary)
-                    }
-                }
-                .padding(.horizontal, 2)
-            }
-
-            HStack(spacing: 8) {
-                toolButton("Fit", "arrow.up.left.and.arrow.down.right", active: false) { ctrl.fit() }
-                toolButton("Edges", "square.dashed", active: ctrl.edges) { ctrl.edges.toggle() }
-                toolButton(ctrl.orthographic ? "Ortho" : "Persp", ctrl.orthographic ? "square" : "cube", active: ctrl.orthographic) { ctrl.orthographic.toggle() }
-                toolButton(ctrl.zUp ? "Z up" : "Y up", "arrow.up.to.line", active: ctrl.zUp) { ctrl.zUp.toggle() }
-            }
-            Text("Drag to orbit · pinch to zoom · two fingers to pan")
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-        }
-        .padding(12)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous).stroke(.white.opacity(0.14), lineWidth: 1))
-    }
-
-    private func toolButton(_ title: String, _ icon: String, active: Bool, _ action: @escaping () -> Void) -> some View {
-        Button {
-            action()
-            Haptics.tick()
+    private var displayMenu: some View {
+        Menu {
+            Toggle(isOn: $ctrl.edges) { Label("Edges", systemImage: "square.dashed") }
+            Picker(selection: $ctrl.orthographic) {
+                Label("Perspective", systemImage: "cube").tag(false)
+                Label("Orthographic", systemImage: "square").tag(true)
+            } label: { Label("Projection", systemImage: "camera.aperture") }
+            .pickerStyle(.menu)
+            Picker(selection: $ctrl.zUp) {
+                Text("Y up").tag(false)
+                Text("Z up").tag(true)
+            } label: { Label("Up axis", systemImage: "arrow.up.to.line") }
+            .pickerStyle(.menu)
+            Divider()
+            Button { ctrl.setView("iso") } label: { Label("Home view", systemImage: "house") }
+            Button { ctrl.fit() } label: { Label("Frame all", systemImage: "arrow.up.left.and.arrow.down.right") }
         } label: {
-            VStack(spacing: 4) {
-                Image(systemName: icon).font(.system(size: 17, weight: .semibold))
-                Text(title).font(.caption2.weight(.semibold))
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 9)
-            .background(active ? AnyShapeStyle(Theme.accentGradient) : AnyShapeStyle(Color.white.opacity(0.08)),
-                        in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .foregroundStyle(.white)
+            Image(systemName: "slider.horizontal.3")
+                .font(.headline)
+                .frame(width: 40, height: 40)
+                .background(.ultraThinMaterial, in: Circle())
+                .overlay(Circle().stroke(.white.opacity(0.12), lineWidth: 1))
         }
-        .buttonStyle(.plain)
+        .tint(.primary)
     }
 }
 
