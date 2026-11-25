@@ -75,6 +75,15 @@
         v.Render();
     }
 
+    function unitName () {
+        if (state.extra && state.extra.unit) { return state.extra.unit; }
+        const model = state.embedded ? state.embedded.GetModel() : null;
+        const units = ['', 'mm', 'cm', 'm', 'in', 'ft'];
+        return model && model.GetUnit ? (units[model.GetUnit()] || '') : '';
+    }
+
+    const toolsContext = { up: () => state.up, unit: unitName, post: post };
+
     function info () {
         const emb = state.embedded;
         const model = emb ? emb.GetModel() : null;
@@ -110,6 +119,7 @@
     }
 
     function create (token, onReady) {
+        if (window.CSTools) { window.CSTools.detach(); }
         if (state.embedded) {
             try { state.embedded.Destroy(); } catch (e) { /* ignore */ }
             state.embedded = null;
@@ -135,6 +145,7 @@
 
     function finish (flat) {
         applyUp(false);
+        if (window.CSTools) { window.CSTools.attach(state.embedded, toolsContext); }
         if (flat) {
             // 2D drawing in the XY plane: look straight at it.
             state.projection = 'orthographic';
@@ -217,8 +228,11 @@
                 post({ type: 'error', message: e.message || String(e) });
             }
         },
-        setView: function (name) { setView(name); },
+        setView: function (name) {
+            if (window.CSTools) { window.CSTools.view(name, true); } else { setView(name); }
+        },
         fit: function () {
+            if (window.CSTools) { window.CSTools.frame(); return; }
             const v = core(), s = sphere();
             if (v && s) { v.FitSphereToWindow(s, true); }
         },
@@ -226,6 +240,7 @@
             state.edges = !!on;
             const v = core();
             if (v) { v.SetEdgeSettings(edgeSettings()); v.Render(); }
+            if (window.CSTools) { window.CSTools.refresh(); }
         },
         setProjection: function (mode) {
             state.projection = mode;
@@ -238,6 +253,7 @@
         setUp: function (axis) {
             state.up = axis === 'Z' ? 'Z' : 'Y';
             applyUp(false);
+            if (window.CSTools) { window.CSTools.upChanged(); }
             setView('iso');
             post({ type: 'info', info: info() });
         },

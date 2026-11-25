@@ -165,6 +165,8 @@ final class ModelViewerController: NSObject, ObservableObject, WKNavigationDeleg
             }
             phase = .ready
             Haptics.tick()
+        case "haptic":
+            Haptics.tick()
         case "info":
             if let d = dict["info"] as? [String: Any] { info = ModelInfo(dictionary: d) }
         case "error":
