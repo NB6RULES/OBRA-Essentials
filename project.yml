@@ -21,7 +21,11 @@ targets:
       - path: OBRAEssentials
         excludes:
           - "Resources/Viewer/**"
+          - "Resources/Tools/**"
       - path: OBRAEssentials/Resources/Viewer
+        type: folder
+        buildPhase: resources
+      - path: OBRAEssentials/Resources/Tools
         type: folder
         buildPhase: resources
     info:

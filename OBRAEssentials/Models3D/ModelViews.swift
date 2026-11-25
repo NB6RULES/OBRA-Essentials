@@ -7,7 +7,7 @@ import UniformTypeIdentifiers
 final class AppRouter: ObservableObject {
     static let shared = AppRouter()
 
-    enum Tab: Hashable { case cones, speed, models, farlink }
+    enum Tab: Hashable { case cones, speed, models, farlink, tools }
 
     @Published var tab: Tab = .cones
     @Published var openItem: ModelItem?

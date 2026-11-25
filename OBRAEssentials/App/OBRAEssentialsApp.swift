@@ -20,6 +20,9 @@ struct OBRAEssentialsApp: App {
                 FarLinkHomeView()
                     .tabItem { Label("FarLink", systemImage: "bolt.horizontal.circle.fill") }
                     .tag(AppRouter.Tab.farlink)
+                ToolsHomeView()
+                    .tabItem { Label("Tools", systemImage: "wrench.and.screwdriver.fill") }
+                    .tag(AppRouter.Tab.tools)
             }
             .tint(Theme.accent)
             .preferredColorScheme(.dark)
